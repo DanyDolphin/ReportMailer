@@ -16,3 +16,12 @@ docker run report-mailer <destination_email>
 ```
 
 - destination_email: the email which receives the report
+
+## Deploy to AWS Lambda
+
+To deploy this script to an AWS Lambda, run the following script:
+```
+bash ./scripts/build-lambda.sh
+```
+
+This will create a `deployment.zip` file that you can load inside AWS Lambda.
