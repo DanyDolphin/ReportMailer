@@ -12,7 +12,7 @@ class GmailClient:
         self.password = os.getenv('GMAIL_PASSWORD')
 
     def send_email(self, subject, body, recipients):
-        msg = MIMEText(body)
+        msg = MIMEText(body, 'html')
         msg['Subject'] = subject
         msg['From'] = self.sender
         msg['To'] = ', '.join(recipients)

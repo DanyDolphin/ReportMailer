@@ -1,5 +1,5 @@
 # Utilities
-from utilities.io import read_csv_file
+from utilities.io import read_csv_file, read_file
 
 
 class Report():
@@ -65,6 +65,14 @@ class Report():
                     f'Number of transactions in {self.MONTH_MAP[month]}:'
                     f'{self.montly_reports[month]["transactions_count"]}')
                 for month in self.montly_reports])
+        elif format == 'html':
+            template = read_file('templates/monthly-report.html')
+            return '\n'.join([
+                template.replace('{{month}}', self.MONTH_MAP[month])
+                .replace(
+                    '{{transactions_count}}',
+                    str(self.montly_reports[month]['transactions_count']))
+                for month in self.montly_reports])
 
     def get_report(self, format='json'):
         '''Get report'''
@@ -80,5 +88,15 @@ class Report():
                 f'{self.get_monthly_reports(format)}',
                 f'Average debit amount: {self.avg_debit_amount}',
                 f'Average credit amount: {self.avg_credit_amount}'])
+        elif format == 'html':
+            template = read_file('templates/report.html')
+            return (
+                template.replace('{{balance}}', str(self.balance))
+                .replace(
+                    '{{monthly_reports}}',
+                    str(self.get_monthly_reports(format)))
+                .replace('{{avg_credit_amount}}', str(self.avg_credit_amount))
+                .replace(
+                    '{{avg_debit_amount}}', str(abs(self.avg_debit_amount))))
         else:
             raise NotImplementedError('Format not supported')

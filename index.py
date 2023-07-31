@@ -14,10 +14,9 @@ load_dotenv()
 
 report = Report()
 report.load_from_csv('transactions.csv')
-print(report.get_report(format='text'))
 
 GmailClient().send_email(
-    'Tu reporte de transacciones Stori',
-    report.get_report(format='text'),
+    'Your transactions report at Stori',
+    report.get_report(format='html'),
     [sys.argv[1]])
 print('Mail enviado')
