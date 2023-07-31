@@ -5,17 +5,14 @@ report to the given email.
 
 ## Setup
 
-- create virtual environment and install dependencies:
 ```
-python -m venv .venv
-source ./.venv/bin/activate
-pip install -r requirements.txt
+docker build -t report-mailer .
 ```
 
 ## Run
 
 ```
-python index.py <destination_email>
+docker run report-mailer <destination_email>
 ```
 
 - destination_email: the email which receives the report
