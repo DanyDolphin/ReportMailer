@@ -4,4 +4,4 @@ echo "Packaging lambda"
 cd package
 zip -r ../deployment.zip .
 cd ..
-zip -r deployment.zip ./clients ./templates ./utilities lambda_function.py transactions.csv
+zip -r deployment.zip ./clients ./models ./templates ./utilities lambda_function.py transactions.csv

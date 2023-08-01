@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: storireportmailer-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - storireportmailer-volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: storireportmailer
+      POSTGRES_USER: storireportmailer
+      POSTGRES_PASSWORD: storireportmailer
+    networks:
+     - storireportmailer-network
+  
+  mailer:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: report-mailer
+    container_name: storireportmailer-mailer
+    stdin_open: true
+    tty: true
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    networks:
+     - storireportmailer-network
+
+networks:
+  storireportmailer-network:
+    driver: "bridge"
+
+volumes:
+  storireportmailer-volume:
+    driver: local

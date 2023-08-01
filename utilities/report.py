@@ -1,6 +1,13 @@
 # Utilities
 from utilities.io import read_csv_file, read_file
 
+# Models
+from models import User, engine
+
+# SQLAlchemy
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
 
 class Report():
     '''Report class'''
@@ -55,6 +62,15 @@ class Report():
         data = read_csv_file(file_name)
         for row in data[1:]:
             self.register_transaction(float(row[2]), row[1])
+
+    def load_from_user(self, email):
+        '''Load data from user'''
+        with Session(engine) as session:
+            user = session.scalar(
+                select(User).where(User.email == email))
+            for transaction in user.transactions:
+                self.register_transaction(
+                    transaction.transaction, transaction.date)
 
     def get_monthly_reports(self, format='json'):
         if format == 'json':

@@ -1,5 +1,6 @@
 FROM python:3.10
 
-COPY . ./
+COPY . ./code
+WORKDIR /code
 RUN pip install -r requirements.txt
-ENTRYPOINT ["python", "index.py"]
+ENTRYPOINT ["bash", "./scripts/start.sh"]
