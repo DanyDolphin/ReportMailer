@@ -66,8 +66,7 @@ class Report():
     def load_from_user(self, email):
         '''Load data from user'''
         with Session(engine) as session:
-            user = session.scalar(
-                select(User).where(User.email == email))
+            user = session.scalar(select(User).where(User.email == email))
             for transaction in user.transactions:
                 self.register_transaction(
                     transaction.transaction, transaction.date)
